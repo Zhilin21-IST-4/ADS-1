@@ -1,49 +1,59 @@
 // Copyright 2022 NNTU-CS
 #include <cstdint>
+#include <cmath>
 #include "alg.h"
 
 bool checkPrime(uint64_t value) {
-  // вставьте код функции
-  for (int i = 2; i*i <= (value); i++) {
-    if (value % i == 0){
-      return false;
-    }
+for (int i = 2; i <= sqrt(value); i++) {
+  if (value % i == 0) {
+    return false;
+  } else {
+    continue;
+  }
+}
+  if (value == 0 || value == 1) {
+    return false;
+  }
+  if (value == 2) {
+    return true;
   }
   return true;
 }
 
-
 uint64_t nPrime(uint64_t n) {
-  // вставьте код функции
-  int count = 0;
-  uint64_t i = 1;
-  while (count != n){
-    i++;
-    if(checkPrime(i)){
-      count++;
+  if (n == 1) {
+    return 2;
+  } else if (n <= 0) {
+    return false;
+  }
+  uint64_t k = 1;
+  for (int i = 3;  ; i++) {
+    if (checkPrime(i)) {
+      k++;
+      if (k == n) {
+        return i;
+      }
     }
   }
-  return  i;
 }
 
-
 uint64_t nextPrime(uint64_t value) {
-  // вставьте код функции
-  int c = value;
+  if (value <= 0) {
+    return 1; }
   while (true) {
-    c++;
-    if (checkPrime(c))
-      return c;
+    if (checkPrime(++value)) {
+      return value;
+    } else {
+      continue;
+    }
   }
 }
 
-
 uint64_t sumPrime(uint64_t hbound) {
-  // вставьте код функции
   uint64_t sum = 0;
-  for (int i = 2; i < hbound; i++) {
+  for (int i = 0; i < hbound; i++) {
     if (checkPrime(i)) {
-      sum += i;
+      sum++;
     }
   }
   return sum;
